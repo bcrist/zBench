@@ -20,7 +20,7 @@ pub fn build(b: *std.Build) void {
     setupDocumentation(b, lib);
 }
 
-fn setupLibrary(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode) *std.Build.Step.Compile {
+fn setupLibrary(b: *std.Build, target: std.Build.ResolvedTarget, optimize: anytype) *std.Build.Step.Compile {
     const zbench_mod = b.addModule("zbench", .{
         .root_source_file = b.path("src/zbench.zig"),
         .target = target,
@@ -39,7 +39,7 @@ fn setupLibrary(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.b
     return lib;
 }
 
-fn setupTesting(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode) void {
+fn setupTesting(b: *std.Build, target: std.Build.ResolvedTarget, optimize: anytype) void {
     const test_files = [_]struct { name: []const u8, path: []const u8 }{
         .{ .name = "partial", .path = "src/partial.zig" },
         .{ .name = "platform", .path = "src/platform/platform.zig" },
@@ -63,7 +63,7 @@ fn setupTesting(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.b
     }
 }
 
-fn setupExamples(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode) void {
+fn setupExamples(b: *std.Build, target: std.Build.ResolvedTarget, optimize: anytype) void {
     const example_step = b.step("examples", "Build examples");
     const example_names = [_][]const u8{
         "basic",
